@@ -52,7 +52,7 @@ export const getCartCount = (prodItem) =>
     get: ({ get }) => {
       const cartItems = get(cartState);
 
-      const count = cartItems.find((item) => item.name == prodItem.name);
+      const count = cartItems.find((item) => item.name === prodItem.name);
       //   console.log(prodItem);
       return count || 0;
     },
