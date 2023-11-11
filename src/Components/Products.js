@@ -1,36 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import AddToCart from "./AddToCart";
 
-// import data from "../Products.json";
-
 const Products = ({ data }) => {
-  console.log(data);
+  const [cartItems, setCartItems] = useState([]);
+
+  const addToCart = (product) => {
+    const existingProductIndex = cartItems.findIndex(
+      (item) => item.id === product.id
+    );
+
+    if (existingProductIndex !== -1) {
+      const updatedCart = [...cartItems];
+      updatedCart[existingProductIndex].quantity += 1;
+      setCartItems(updatedCart);
+    } else {
+      setCartItems([
+        ...cartItems,
+        {
+          name: product.name,
+          id: product.id,
+          quantity: 1,
+        },
+      ]);
+    }
+  };
+
   return (
     <div>
-      {data.map((product) => {
-        // console.log(product);
-        return (
-          <Row xs={1} md={2} className="g-4">
-            <Card>
-              <Card.Img variant="top" src="" />
-              <Card.Body>
-                <Card.Title>
-                  {product.name.charAt(0).toUpperCase() + product.name.slice(1)}
-                </Card.Title>
-                <Card.Text>{product.shortDesc}</Card.Text>
-                <Card.Text>Price Rs.{product.price}</Card.Text>
-                <Card.Body>
-                  <Button variant="dark">More details</Button>{" "}
-                  <AddToCart key={product.id} productItem={product} />
-                </Card.Body>
-              </Card.Body>
-            </Card>
-          </Row>
-        );
-      })}
+      {console.log(cartItems)}
+      <AddToCart addToCart={addToCart} cartItems={cartItems} products={data} />
     </div>
   );
 };

@@ -1,61 +1,48 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { useRecoilState, useRecoilValue } from "recoil";
 import { useState } from "react";
-import {
-  cartUpdatedList,
-  getCartCount,
-  removeCartList,
-} from "../atoms/Selectors";
 
-const AddToCart = ({ productItem }) => {
-  console.log("Checking props ", productItem);
-  const [newItems, setNewItems] = useRecoilState(cartUpdatedList);
-  // const [cartState, setCartState] = useRecoilState(removeCartList);
-  const count = useRecoilValue(getCartCount(productItem));
-  const [isAddingToCart, setIsAddingToCart] = useState(true);
-
-  const incrementCart = (productItem) => {
-    setIsAddingToCart(false);
-    setNewItems(productItem);
-  };
-
-  const decrementCart = (productItem) => {
-    // setCartState(productItem);
-    // // const countItem = cartState.find((item) => item.name == productItem.name);
-    // console.log(count);
-    // if (count == 0) {
-    //   setIsAddingToCart(true);
-    // }
-  };
+const AddToCart = ({ addToCart, cartItems, products }) => {
+  const toggelButton = (pro) => {};
 
   return (
-    <>
-      {/* {console.log(newItems)} */}
-      {isAddingToCart ? (
-        <Button variant="secondary" onClick={() => incrementCart(productItem)}>
-          Add to Cart
-        </Button>
-      ) : (
-        <>
-          <Button
-            onClick={() => {
-              incrementCart(productItem);
-            }}
-          >
-            +
-          </Button>
-          <span>{count}</span>
-          <Button
-            onClick={() => {
-              decrementCart(productItem);
-            }}
-          >
-            -
-          </Button>
-        </>
-      )}
-    </>
+    <div>
+      {console.log(cartItems)}
+      <h2>Cart</h2>
+      <ul>
+        {cartItems.map((item, index) => (
+          <li key={index}>
+            {item.name} - Quantity: {item.quantity}
+          </li>
+        ))}
+      </ul>
+      <h2>Product List</h2>
+      <ul>
+        {products.map((product, index) => (
+          <li key={index}>
+            {product.name} -{" "}
+            {/* <button onClick={() => addToCart(product)}>Add to Cart</button> */}
+            {cartItems.name !== product.name ? (
+              <Button variant="secondary" onClick={() => addToCart(product)}>
+                Add to Cart
+              </Button>
+            ) : (
+              <>
+                <Button
+                  onClick={() => {
+                    addToCart(product);
+                  }}
+                >
+                  +
+                </Button>
+                <span>{cartItems.quantity}</span>
+                <Button onClick={() => {}}>-</Button>
+              </>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

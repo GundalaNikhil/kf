@@ -46,14 +46,14 @@ export const removeCartList = selector({
   },
 });
 
-export const getCartCount = (prodItem) =>
-  selector({
-    key: "getCartItemCount",
-    get: ({ get }) => {
-      const cartItems = get(cartState);
+// export const getCartCount = (prodItem) =>
+//   selector({
+//     key: "getCartItemCount",
+//     get: ({ get }) => {
+//       const cartItems = get(cartState);
 
-      const count = cartItems.find((item) => item.name === prodItem.name);
-      //   console.log(prodItem);
-      return count || 0;
-    },
-  });
+//       const count = cartItems.find((item) => item.name === prodItem.name);
+//       //   console.log(prodItem);
+//       return count || 0;
+//     },
+//   });
